@@ -7,6 +7,8 @@ name = "pypi"
 flask = "*"
 python-dotenv = "*"
 pytelegrambotapi = "*"
+python-telegram-bot = "*"
+requests = "*"
 
 [dev-packages]
 
