@@ -9,6 +9,7 @@ python-dotenv = "*"
 pytelegrambotapi = "*"
 python-telegram-bot = "*"
 requests = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 

@@ -3,7 +3,7 @@ from flask import Flask
 
 from .blueprints.telegram.routes import telebot, sample_responses
 
-from .config import API_KEY
+from .config import API_KEY, db
 
 import telegram
 
@@ -12,6 +12,13 @@ from telegram.ext import *
 
 def create_app(config):
     app = Flask(__name__)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/sqlite.db'
+
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
 
     telegram.Bot(token=API_KEY)
 
