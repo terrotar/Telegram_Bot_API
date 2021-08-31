@@ -5,7 +5,7 @@ from .blueprints.api.routes import api
 
 from .telegram import telebot
 
-from .config import API_KEY, db, bot
+from .config import API_KEY, db
 
 from telegram.ext import Updater
 
