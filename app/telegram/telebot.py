@@ -1,5 +1,7 @@
 
-from telegram.ext import CommandHandler, MessageHandler, Filters
+from telegram import KeyboardButton, ReplyKeyboardMarkup, Update
+
+from telegram.ext import CallbackQueryHandler, CallbackContext, CommandHandler, MessageHandler, Filters
 
 from app.config import db
 
@@ -21,20 +23,6 @@ Caso esteja em duvida /help
              """)
 
 
-# Caps
-def caps(update, context):
-    text_caps = ' '.join(context.args).upper()
-    context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=text_caps)
-
-
-# Echo
-def echo(update, context):
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=update.message.text)
-
-
 # Help
 def help_user(update, context):
     context.bot.send_message(
@@ -42,47 +30,44 @@ def help_user(update, context):
         text="""
              Para interagir com o bot é muito fácil! Basta digitar os comandos ou clicar neles\n
              Cadastro:
-             nome, sobrenome, celular\n
+             Compartilhar número de celular\n
              Comandos:
              Cadastro /register
              Ajuda /help
              """)
 
 
-# Register
-def check_value(user_input):
-    if (user_input):
-        checker = user_input.split(" ")
-        if (len(checker) == 3):
-            try:
-                isinstance(int(checker[2]), int) is True
-            except Exception:
-                return False
-    return False
-
-
 # Register_intro
-def register_intro(update, context):
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text="""
-Você irá digitar seu primeiro nome, sobrenome e celular separados por espaços.
-Exemplo:\n
-Pedro Guedes 11953842552\n
-/entendi
-""")
+def register(update: Update, context: CallbackContext) -> None:
+    # Button to confirm share cel_number, deny or get help
+    keyboard = [
+        [
+            KeyboardButton("Claro!", request_contact=True),
+            KeyboardButton("Ahh... acho que não", callback_data="Que pena =["),
+        ],
+        [KeyboardButton("/help")],
+    ]
+
+    reply_markup = ReplyKeyboardMarkup(keyboard)
+
+    context.bot.send_message(chat_id=update.effective_chat.id,
+                             text="""
+Para continuar o cadastro é necessário informar seu celular.\n
+Caso tenha dúvidas, clique ou digite /help
+                                  """,
+                             reply_markup=reply_markup)
 
 
-# Register command /entendi
-def register(update, context):
-    user_input = update.message.text
-    if (check_value(user_input) is True):
-        user_input = user_input.split(" ")
-        new_user = User(first_name=user_input[0],
-                        last_name=user_input[1],
-                        cel_number=user_input[2])
-        db.session.add(new_user)
-        db.commit()
+# Button Callback
+def button(update: Update, context: CallbackContext) -> None:
+    """Parses the CallbackQuery and updates the message text."""
+    query = update.callback_query
+
+    # CallbackQueries need to be answered, even if no notification to the user is needed
+    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
+    query.answer()
+
+    query.edit_message_text(text=f"Selected option: {query.message}")
 
 
 # MUST BE LAST
@@ -101,27 +86,19 @@ def unknown(update, context):
 start_handler = CommandHandler('start', start)
 
 
-# Caps
-caps_handler = CommandHandler('caps', caps)
-
-
 # Help
 help_handler = CommandHandler('help', help_user)
 
 
-# register_intro
-register_intro_handler = CommandHandler('register', register_intro)
+# register
+register_handler = CommandHandler('register', register)
 
-
-# Register
-register_handler = CommandHandler('entendi', register)
 
 # MESSAGES
 
-# Echo
-# & (~Filters.command)
-# and is not a command text
-echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
+
+# Button Callback
+buttons_handler = CallbackQueryHandler(button)
 
 
 # MUST BE LAST
