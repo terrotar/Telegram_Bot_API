@@ -31,6 +31,9 @@ def create_app(config):
 
     # Bot Handlers
     dispatcher.add_handler(telebot.start_handler)
+    dispatcher.add_handler(telebot.echo_handler)
+    dispatcher.add_handler(telebot.caps_handler)
+    dispatcher.add_handler(telebot.unknown_handler)
 
     # Bot loop
     updater.start_polling()
