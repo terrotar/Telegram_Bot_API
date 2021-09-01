@@ -7,7 +7,7 @@ from .telegram import telebot
 
 from .config import API_KEY, db
 
-from .models import user
+from .models import message, user
 
 from telegram.ext import Updater
 
