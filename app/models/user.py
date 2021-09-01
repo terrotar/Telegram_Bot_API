@@ -12,6 +12,7 @@ class User(db.Model):
     __last_name = db.Column("last_name", db.String, nullable=False)
     __cel_number = db.Column("cel_number", db.BigInteger, unique=True, nullable=False)
     __messages = db.Column("messages", db.BigInteger, unique=True, nullable=False)
+    __messages = db.relationship("Message", backref="messages")
 
     def __init__(self, first_name, last_name, cel_number):
         self.__first_name = first_name
