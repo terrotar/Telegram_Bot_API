@@ -8,7 +8,19 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 def start(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Bem-vindo ao WebDevTestBot!")
+        text="""
+             Bem-vindo ao WebDevTestBot!
+             """)
+
+
+"""
+# Teste
+def teste(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f"{update.message.text}"
+    )
+"""
 
 
 # Echo
@@ -29,7 +41,7 @@ def caps(update, context):
 # Unknown
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
-                             text="Desculpe mas não entendi.Digite /help caso precise de ajuda.")
+                             text="Desculpe mas não entendi. Digite /help caso precise de ajuda.")
 
 
 # BOT HANDLERS
