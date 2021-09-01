@@ -7,6 +7,8 @@ from .telegram import telebot
 
 from .config import API_KEY, db
 
+from .models import user
+
 from telegram.ext import Updater
 
 
@@ -16,7 +18,11 @@ def create_app(config):
 
     # Config of database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/sqlite.db'
+
+    # Db init
     db.init_app(app)
+
+    # create db tables
     with app.app_context():
         db.create_all()
 
