@@ -55,12 +55,13 @@ Caso tenha dúvidas, clique ou digite /help
                              reply_markup=reply_markup)
 
 
+# Contact Callback
 def contact_callback(update, context):
     contact = update.effective_message.contact
     if (contact):
         phone = contact.phone_number
         context.bot.send_message(chat_id=update.effective_chat.id,
-                                text=f"cel: {phone}\ncontact: {contact}")
+                                 text=f"cel: {phone}\ncontact: {contact}")
 
 
 # MUST BE LAST

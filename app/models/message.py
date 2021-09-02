@@ -10,13 +10,13 @@ class Message(db.Model):
     __text = db.Column("text", db.String, nullable=False)
     __first_name = db.Column("first_name", db.String, db.ForeignKey('usuario.first_name'))
     __cel_number = db.Column("cel_number", db.BigInteger, db.ForeignKey('usuario.cel_number'))
-    __user_id = db.Column("user_id", db.Integer, db.ForeignKey('usuario.id_user'))
+    __id_user = db.Column("usid_user", db.Integer, db.ForeignKey('usuario.id_user'))
 
-    def __init__(self, text, first_name, cel_number, user_id):
+    def __init__(self, text, first_name, cel_number, id_user):
         self.__text = text
         self.__first_name = first_name
         self.__cel_number = cel_number
-        self.__user_id = user_id
+        self.__id_user = id_user
 
     # GETTERS
     # text
@@ -34,7 +34,7 @@ class Message(db.Model):
     def cel_number(self):
         return self.__cel_number
 
-    # user_id
+    # id_user
     @hybrid_property
-    def user_id(self):
-        return self.__user_id
+    def id_user(self):
+        return self.__id_user
