@@ -37,37 +37,30 @@ def help_user(update, context):
              """)
 
 
-# Register_intro
-def register(update: Update, context: CallbackContext) -> None:
+# Register
+def register(update, context):
     # Button to confirm share cel_number, deny or get help
     keyboard = [
-        [
-            KeyboardButton("Claro!", request_contact=True),
-            KeyboardButton("Ahh... acho que não", callback_data="Que pena =["),
-        ],
-        [KeyboardButton("/help")],
+        [KeyboardButton("Claro!", request_contact=True)],
+        [KeyboardButton("/help")]
     ]
 
     reply_markup = ReplyKeyboardMarkup(keyboard)
 
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="""
-Para continuar o cadastro é necessário informar seu celular.\n
+Para continuar o cadastro é necessário compartilhar seu celular.\n
 Caso tenha dúvidas, clique ou digite /help
                                   """,
                              reply_markup=reply_markup)
 
 
-# Button Callback
-def button(update: Update, context: CallbackContext) -> None:
-    """Parses the CallbackQuery and updates the message text."""
-    query = update.callback_query
-
-    # CallbackQueries need to be answered, even if no notification to the user is needed
-    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
-    query.answer()
-
-    query.edit_message_text(text=f"Selected option: {query.message}")
+def contact_callback(update, context):
+    contact = update.effective_message.contact
+    if (contact):
+        phone = contact.phone_number
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                text=f"cel: {phone}\ncontact: {contact}")
 
 
 # MUST BE LAST
@@ -97,8 +90,8 @@ register_handler = CommandHandler('register', register)
 # MESSAGES
 
 
-# Button Callback
-buttons_handler = CallbackQueryHandler(button)
+# Contact
+contact_handler = MessageHandler(Filters.contact, contact_callback)
 
 
 # MUST BE LAST

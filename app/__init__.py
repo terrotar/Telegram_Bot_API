@@ -39,7 +39,8 @@ def create_app(config):
     dispatcher.add_handler(telebot.start_handler)
     dispatcher.add_handler(telebot.help_handler)
     dispatcher.add_handler(telebot.register_handler)
-    dispatcher.add_handler(telebot.buttons_handler)
+    # dispatcher.add_handler(telebot.buttons_handler)
+    dispatcher.add_handler(telebot.contact_handler)
     dispatcher.add_handler(telebot.unknown_handler)
 
     # Bot loop
