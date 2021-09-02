@@ -22,7 +22,7 @@ OK
 
 Terceiro passo: Após confirmar a aceitação do usuário no Telegram,
 salvar essas informações do usuário no banco de dados;
-PROGRESS
+OK
 
 
 
