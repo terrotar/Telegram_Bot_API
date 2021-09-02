@@ -12,6 +12,9 @@ class Message(db.Model):
     __text = db.Column("text",
                        db.String,
                        nullable=False)
+    __username = db.Column("username",
+                           db.String,
+                           nullable=True)
     """__first_name = db.Column("first_name",
                              db.String,
                              db.ForeignKey('usuario.first_name'))

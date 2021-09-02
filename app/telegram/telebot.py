@@ -63,17 +63,17 @@ def contact_callback(update, context):
     contact = update.effective_message.contact
     if (contact):
         try:
-            db.add_user(contact.user_id, contact.first_name,
-                        contact.last_name, contact.user_id)
+            db.add_user(contact.user_id, update.message.from_user.username, contact.first_name,
+                        contact.last_name, contact.phone_number)
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
         except Exception:
             context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text="Você já está cadastrado =]")
+                                     text=f"Você já está cadastrado =]")
 
 
 # MUST BE LAST
-# Unknownu
+# Unknown
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Desculpe mas não entendi. Digite /help caso precise de ajuda.")

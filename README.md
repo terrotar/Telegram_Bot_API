@@ -59,22 +59,26 @@ JSON example:
 # Etapas Internas
 
 - DB
-Configurar senha hash
-Criar coluna usuario data registro
-Integrar coluna registro da tabela usuário com tabela mensagem
-Criar coluna messege_id do context.text.message_id
 Igual para context.contact.username
-Com o message_id dá para enviar msgs aos usuarios individualmente no POST da API
+
+
+
+# BONUS
+
+- DB
+Criar coluna data registro na tabela usuario
+Integrar coluna registro da tabela usuário com tabela mensagem
 
 
 - LOG
 Integrar .log por dia
 
 
-- BOT
-Utilizar stickers com os callbacks do bot
-Melhorar descrição do bot
-
-
 - TEST
 Implementar testes unitários
+
+
+- BOT
+Opção de descadastrar do sistema via chat
+Utilizar stickers com os callbacks do bot
+Melhorar descrição do bot

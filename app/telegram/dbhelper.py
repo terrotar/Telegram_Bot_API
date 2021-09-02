@@ -6,9 +6,9 @@ class DBHelper:
         self.dbname = dbname
         self.conn = sqlite3.connect(dbname, check_same_thread=False)
 
-    def add_user(self, id_user, first_name, last_name, cel_number):
-        stmt = "INSERT INTO usuario (id_user, first_name, last_name, cel_number) VALUES (?, ?, ?, ?)"
-        args = (id_user, first_name, last_name, cel_number)
+    def add_user(self, id_user, username, first_name, last_name, cel_number):
+        stmt = "INSERT INTO usuario (id_user, username, first_name, last_name, cel_number) VALUES (?, ?, ?, ?, ?)"
+        args = (id_user, username, first_name, last_name, cel_number)
         self.conn.execute(stmt, args)
         self.conn.commit()
 
