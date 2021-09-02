@@ -15,21 +15,25 @@ class Message(db.Model):
     __username = db.Column("username",
                            db.String,
                            nullable=True)
-    """__first_name = db.Column("first_name",
+    __first_name = db.Column("first_name",
                              db.String,
-                             db.ForeignKey('usuario.first_name'))
+                             nullable=False)
     __last_name = db.Column("last_name",
                             db.String,
-                            db.ForeignKey('usuario.last_name'))
+                            nullable=True)
     __cel_number = db.Column("cel_number",
                              db.String,
-                             db.ForeignKey('usuario.cel_number'))"""
+                             nullable=False)
     __id_user = db.Column("id_user",
                           db.BigInteger,
                           db.ForeignKey('usuario.id_user'))
 
-    def __init__(self, text):
+    def __init__(self, text, username, first_name, last_name, cel_number):
         self.__text = text
+        self.__username = self.__id_user.username
+        self.__first_name = self.__id_user.first_name
+        self.__last_name = self.__id_user.last_name
+        self.__cel_number = self.__id_user.cel_number
 
     # GETTERS
     # id_message
