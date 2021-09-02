@@ -1,11 +1,14 @@
 
-from telegram import KeyboardButton, ReplyKeyboardMarkup, Update
+from telegram import KeyboardButton, ReplyKeyboardMarkup
 
-from telegram.ext import CallbackQueryHandler, CallbackContext, CommandHandler, MessageHandler, Filters
+from telegram.ext import CommandHandler, MessageHandler, Filters
 
-from app.config import db
+# Module created to make easier the database management
+from .dbhelper import DBHelper
 
-from app.models.user import User
+
+# Instance of database's helper class
+db = DBHelper()
 
 
 # BOT COMMANDS
@@ -59,13 +62,18 @@ Caso tenha dúvidas, clique ou digite /help
 def contact_callback(update, context):
     contact = update.effective_message.contact
     if (contact):
-        phone = contact.phone_number
-        context.bot.send_message(chat_id=update.effective_chat.id,
-                                 text=f"cel: {phone}\ncontact: {contact}")
+        try:
+            db.add_user(contact.user_id, contact.first_name,
+                        contact.last_name, contact.user_id)
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
+        except Exception:
+            context.bot.send_message(chat_id=update.effective_chat.id,
+                                     text="Você já está cadastrado =]")
 
 
 # MUST BE LAST
-# Unknown
+# Unknownu
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Desculpe mas não entendi. Digite /help caso precise de ajuda.")

@@ -2,6 +2,7 @@
 from flask import Flask
 
 from .blueprints.api.routes import api
+from .blueprints.telegram_user.routes import telegram_user
 
 from .telegram import telebot
 
@@ -23,11 +24,12 @@ def create_app(config):
     db.init_app(app)
 
     # create db tables
-    with app.app_context():
-        db.create_all()
+    app.app_context().push()
+    db.create_all()
 
     # Config of Blueprints
     app.register_blueprint(api)
+    app.register_blueprint(telegram_user)
 
     # Config of bot
     print("Bot started...")
@@ -47,6 +49,3 @@ def create_app(config):
     updater.start_polling()
 
     return app
-
-
-# updater.stop()

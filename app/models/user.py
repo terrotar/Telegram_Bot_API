@@ -7,10 +7,19 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
     __tablename__ = "usuario"
-    __id_user = db.Column("id_user", db.BigInteger, primary_key=True)
-    __first_name = db.Column("first_name", db.String, nullable=False)
-    __last_name = db.Column("last_name", db.String, nullable=True)
-    __cel_number = db.Column("cel_number", db.String, unique=True, nullable=False)
+    __id_user = db.Column("id_user",
+                          db.BigInteger,
+                          primary_key=True)
+    __first_name = db.Column("first_name",
+                             db.String,
+                             nullable=False)
+    __last_name = db.Column("last_name",
+                            db.String,
+                            nullable=True)
+    __cel_number = db.Column("cel_number",
+                             db.String,
+                             unique=True,
+                             nullable=False)
     __messages = db.relationship("Message", backref="messages")
 
     def __init__(self, id_user, first_name, last_name, cel_number):
