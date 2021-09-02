@@ -5,7 +5,7 @@ from .blueprints.api.routes import api
 
 from .telegram import telebot
 
-from .config import API_KEY, db, SECRET_KEY
+from .config import API_KEY, db, SECRET_KEY, ma
 
 from .models import message, user
 
@@ -15,6 +15,9 @@ from telegram.ext import Updater
 def create_app(config):
     # Instance of flask app
     app = Flask(__name__)
+
+    # Instance of marshmallow to work with JSON
+    ma.init_app(app)
 
     # Instance app.config == 'config.py'
     app.config.from_pyfile('config.py')

@@ -1,5 +1,6 @@
 
-from app.config import db
+from app.config import db, ma
+
 
 # Create getters
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -57,3 +58,14 @@ class User(db.Model):
     @hybrid_property
     def cel_number(self):
         return self.__cel_number
+
+
+# Marshmallow Schema
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("id_user", "username", "first_name", "last_name", "cel_number")
+
+
+# Loads in JSON one or many users
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)

@@ -10,6 +10,7 @@ pytelegrambotapi = "*"
 python-telegram-bot = "*"
 requests = "*"
 flask-sqlalchemy = "*"
+flask-marshmallow = "*"
 
 [dev-packages]
 
