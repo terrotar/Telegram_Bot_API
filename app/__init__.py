@@ -2,7 +2,6 @@
 from flask import Flask
 
 from .blueprints.api.routes import api
-from .blueprints.telegram_user.routes import telegram_user
 
 from .telegram import telebot
 
@@ -33,7 +32,6 @@ def create_app(config):
 
     # Config of Blueprints
     app.register_blueprint(api)
-    app.register_blueprint(telegram_user)
 
     # Config of bot
     print("Bot started...")
