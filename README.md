@@ -56,13 +56,6 @@ JSON example:
 }
 
 
-# Etapas Internas
-
-- DB
-Igual para context.contact.username
-
-
-
 # BONUS
 
 - DB
