@@ -12,3 +12,10 @@ def get_users():
     users = User.query.all()
     all_users = jsonify(users_schema.dump(users))
     return all_users
+
+
+@api.route("/user/<id_user>", methods=["GET"])
+def get_user(id_user):
+    user = User.query.get(id_user)
+    user = jsonify(user_schema.dump(user))
+    return user
