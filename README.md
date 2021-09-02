@@ -1,3 +1,6 @@
+
+# Escopo
+
 Boa tarde!!
 
 Segue o desafio como combinado. 
@@ -51,3 +54,27 @@ JSON example:
 “cel_number” : 55999999999,
 “id”: 1
 }
+
+
+# Etapas Internas
+
+- DB
+Configurar senha hash
+Criar coluna usuario data registro
+Integrar coluna registro da tabela usuário com tabela mensagem
+Criar coluna messege_id do context.text.message_id
+Igual para context.contact.username
+Com o message_id dá para enviar msgs aos usuarios individualmente no POST da API
+
+
+- LOG
+Integrar .log por dia
+
+
+- BOT
+Utilizar stickers com os callbacks do bot
+Melhorar descrição do bot
+
+
+- TEST
+Implementar testes unitários

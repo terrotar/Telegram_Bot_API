@@ -6,7 +6,7 @@ from .blueprints.telegram_user.routes import telegram_user
 
 from .telegram import telebot
 
-from .config import API_KEY, db
+from .config import API_KEY, db, SECRET_KEY
 
 from .models import message, user
 
@@ -17,8 +17,12 @@ def create_app(config):
     # Instance of flask app
     app = Flask(__name__)
 
+    # Instance app.config == 'config.py'
+    app.config.from_pyfile('config.py')
+
     # Config of database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database/sqlite.db'
+    app.config['SECRET_KEY'] = SECRET_KEY
 
     # Db init
     db.init_app(app)
