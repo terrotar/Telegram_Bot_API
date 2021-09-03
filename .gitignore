@@ -250,6 +250,3 @@ pip-selfcheck.json
 
 # Package python-dotenv
 .flaskenv
-
-#KEY
-config.py
