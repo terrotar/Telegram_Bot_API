@@ -31,9 +31,14 @@ def get_user(id_user):
 
 
 # Route to send a msg to a certain user
-@api.route("/user/<id_user>/message/<message>", methods=["POST"])
-def message_user(id_user, message):
-    if (request.method == "POST"):
-        send_text = f'https://api.telegram.org/bot{API_KEY}/sendMessage?chat_id={id_user}&text={message}'
-        response = requests.post(send_text, API_KEY=API_KEY, id_user=id_user, message=message)
-        return response.json()
+@api.route("/user/<user_id>/message/<message>", methods=["GET", "POST"])
+def message_user(user_id, message):
+    # Bot_key
+    bot = API_KEY
+    # URL
+    send_text = f'https://api.telegram.org/bot{bot}/sendMessage'
+    # Parameters
+    params = {"chat_id": str(user_id), "text": str(message)}
+    # Response
+    response = requests.post(send_text, params)
+    return response.text
