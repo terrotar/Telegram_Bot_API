@@ -248,6 +248,8 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,flask,database,virtualenv
 
-
 # Package python-dotenv
 .flaskenv
+
+#KEY
+config.py
