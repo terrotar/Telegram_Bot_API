@@ -1,6 +1,8 @@
 
 from app.config import db, ma
 
+from .message import Message
+
 
 # Create getters
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -58,6 +60,12 @@ class User(db.Model):
     @hybrid_property
     def cel_number(self):
         return self.__cel_number
+
+    def send_message(self, text):
+        new_message = Message(text=text)
+        db.session.add(new_message)
+        db.commit()
+        return new_message
 
 
 # Marshmallow Schema

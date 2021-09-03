@@ -3,7 +3,9 @@ from flask import Blueprint, jsonify, request
 
 from ...models.user import User, user_schema, users_schema
 
-from ...config import API_KEY
+from ...models.message import Message
+
+from ...config import API_KEY, db
 
 import requests
 
@@ -41,4 +43,22 @@ def message_user(user_id, message):
     params = {"chat_id": str(user_id), "text": str(message)}
     # Response
     response = requests.post(send_text, params)
+    # new_message
+    new_message = Message()
+
+    # Set user's message atributes
+    user = User.query.get(user_id)
+
+    new_message.text = message
+    new_message.first_name = user.first_name
+    new_message.cel_number = user.cel_number
+    new_message.id_user = user.id_user
+
+    if (user.last_name):
+        new_message.last_name = user.last_name
+    if (user.username):
+        new_message.username = user.username
+    # Instance new_message
+    db.session.add(new_message)
+    db.session.commit()
     return response.text
