@@ -74,12 +74,12 @@ def contact_callback(update, context):
     # datetime.date(byear, bmonth, bday)
     contact = update.effective_message.contact
     if (contact):
-            db.add_user(contact.user_id, update.message.from_user.username, contact.first_name,
-                        contact.last_name, contact.phone_number, register)
-            context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
-            logger.success({"Telebot": {"status": "True", "data": [
-                           "new_user", {"user_id": f"{contact.user_id}"}]}})
+        db.add_user(contact.user_id, update.message.from_user.username, contact.first_name,
+                    contact.last_name, contact.phone_number, register)
+        context.bot.send_message(chat_id=update.effective_chat.id,
+                                 text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
+        logger.success({"Telebot": {"status": "True", "data": [
+                       "new_user", {"user_id": f"{contact.user_id}"}]}})
 
 
 # MUST BE LAST
