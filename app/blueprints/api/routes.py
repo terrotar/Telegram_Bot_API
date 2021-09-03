@@ -9,6 +9,8 @@ from ...config import API_KEY, db
 
 import requests
 
+from loguru import logger
+
 
 # Instance of Blueprint api with url_prefix
 api = Blueprint('api', __name__, url_prefix="/api")
@@ -20,6 +22,7 @@ def get_users():
     if (request.method == "GET"):
         users = User.query.all()
         all_users = jsonify(users_schema.dump(users))
+        logger.success({"Request": {"status": "True", "data": "all_users"}})
         return all_users
 
 
@@ -29,6 +32,7 @@ def get_user(id_user):
     if (request.method == "GET"):
         user = User.query.get(id_user)
         user = jsonify(user_schema.dump(user))
+        logger.success({"Request": {"status": "True", "data": ["get_user", {"id_user": f"{id_user}"}]}})
         return user
 
 
@@ -61,4 +65,5 @@ def message_user(user_id, message):
     # Instance new_message
     db.session.add(new_message)
     db.session.commit()
+    logger.success({"Request": {"status": "True", "data": ["message_user", {"user_id": f"{user.id_user}"}]}})
     return response.text

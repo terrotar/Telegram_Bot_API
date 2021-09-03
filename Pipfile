@@ -11,6 +11,7 @@ python-telegram-bot = "*"
 requests = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
+loguru = "*"
 
 [dev-packages]
 

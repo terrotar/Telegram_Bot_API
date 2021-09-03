@@ -6,6 +6,8 @@ from telegram.ext import CommandHandler, MessageHandler, Filters
 # Module created to make easier the database management
 from .dbhelper import DBHelper
 
+from loguru import logger
+
 
 # Instance of database's helper class
 db = DBHelper()
@@ -24,6 +26,7 @@ Para receber mensagens é necessário
 realizar o cadastro /register\n
 Caso esteja em duvida /help
              """)
+    logger.success({"Telebot": {"status": "True", "data": ["start_chat", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Help
@@ -38,6 +41,7 @@ def help_user(update, context):
              Cadastro /register
              Ajuda /help
              """)
+    logger.info({"Telebot": {"status": "True", "data": ["command_help", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Register
@@ -56,6 +60,7 @@ Para continuar o cadastro é necessário compartilhar seu celular.\n
 Caso tenha dúvidas, clique ou digite /help
                                   """,
                              reply_markup=reply_markup)
+    logger.info({"Telebot": {"status": "True", "data": ["command_register", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Contact Callback
@@ -67,9 +72,11 @@ def contact_callback(update, context):
                         contact.last_name, contact.phone_number)
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
+            logger.success({"Telebot": {"status": "True", "data": ["new_user", {"user_id": f"{contact.user_id}"}]}})
         except Exception:
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text=f"Você já está cadastrado =]")
+            logger.error({"Telebot": {"status": "False", "data": ["already_registered", {"user_id": f"{contact.user_id}"}]}})
 
 
 # MUST BE LAST
@@ -77,6 +84,7 @@ def contact_callback(update, context):
 def unknown(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text="Desculpe mas não entendi. Digite /help caso precise de ajuda.")
+    logger.error({"Telebot": {"status": "null", "data": "unknown_command"}})
 
 
 # BOT HANDLERS

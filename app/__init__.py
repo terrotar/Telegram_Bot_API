@@ -11,6 +11,8 @@ from .models import message, user
 
 from telegram.ext import Updater
 
+from loguru import logger
+
 
 def create_app(config):
     # Instance of flask app
@@ -52,5 +54,8 @@ def create_app(config):
 
     # Bot loop
     updater.start_polling()
+
+    # Log Files
+    logger.add("logs/app.log", rotation="20:00", backtrace=True, diagnose=True)
 
     return app
