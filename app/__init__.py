@@ -14,6 +14,12 @@ from telegram.ext import Updater
 from loguru import logger
 
 
+# Config Files
+# There's only 2 keys and 2 instances:
+# db = SQLAlchemy()
+# ma = Marshmallow()
+
+
 def create_app(config):
     # Instance of flask app
     app = Flask(__name__)
