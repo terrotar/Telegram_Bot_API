@@ -37,14 +37,15 @@ def get_user(id_user):
 
 
 # Route to send a msg to a certain user
-@api.route("/user/<user_id>/message/<message>", methods=["GET", "POST"])
+@api.route("/user/message/<user_id>/<message>", methods=["GET", "POST"])
 def message_user(user_id, message):
     # Bot_key
     bot = API_KEY
     # URL
     send_text = f'https://api.telegram.org/bot{bot}/sendMessage'
     # Parameters
-    params = {"chat_id": str(user_id), "text": str(message)}
+    params = {"chat_id": str(user_id),
+              "text": str(message)}
     # Response
     response = requests.post(send_text, params)
     # new_message
@@ -65,5 +66,5 @@ def message_user(user_id, message):
     # Instance new_message
     db.session.add(new_message)
     db.session.commit()
-    logger.success({"Request": {"status": "True", "data": ["message_user", {"user_id": f"{user.id_user}"}]}})
+    logger.success({"Request": {"status": "True", "data": ["message_user", {"user_id": f"{user.id_user}", "message": f"{new_message.text}"}]}})
     return response.text
