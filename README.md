@@ -48,7 +48,7 @@ para qualquer aplicação. Ainda possui uma escalabilidade absurda, sendo muito 
 já contorna, controla e evita diversos tipos de erros.
 
 
-# Como Inicicar
+# Como Iniciar
 
 - Instalar bibliotecas do Pipfile(similar ao requirements.txt)
 
