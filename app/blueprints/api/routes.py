@@ -1,5 +1,5 @@
 
-from flask import Blueprint, jsonify, request
+from flask import abort, Blueprint, jsonify, request
 
 from ...models.user import User, user_schema, users_schema
 
@@ -31,9 +31,20 @@ def get_users():
 def get_user(id_user):
     if (request.method == "GET"):
         user = User.query.get(id_user)
-        user = jsonify(user_schema.dump(user))
-        logger.success({"Request": {"status": "True", "data": ["get_user", {"id_user": f"{id_user}"}]}})
-        return user
+        if (user):
+            user = jsonify(user_schema.dump(user))
+            logger.success({"Request": {"status": "True", "data": ["get_user", {"id_user": f"{id_user}"}]}})
+            return user
+        else:
+            logger.error({"Request": {"status": "null", "data": ["get_user", {"id_user": f"{id_user}"}]}})
+            return abort(400, {
+                "Request": {
+                    "status": "null",
+                    "data": ["get_user", {
+                        "id_user": f"{id_user}"
+                    }]
+                }
+            })
 
 
 # Route to send a msg to a certain user
@@ -53,18 +64,28 @@ def message_user(user_id, message):
 
     # Set user's message atributes
     user = User.query.get(user_id)
+    if (user):
+        new_message.text = message
+        new_message.first_name = user.first_name
+        new_message.cel_number = user.cel_number
+        new_message.id_user = user.id_user
 
-    new_message.text = message
-    new_message.first_name = user.first_name
-    new_message.cel_number = user.cel_number
-    new_message.id_user = user.id_user
-
-    if (user.last_name):
-        new_message.last_name = user.last_name
-    if (user.username):
-        new_message.username = user.username
-    # Instance new_message
-    db.session.add(new_message)
-    db.session.commit()
-    logger.success({"Request": {"status": "True", "data": ["message_user", {"user_id": f"{user.id_user}", "message": f"{new_message.text}"}]}})
-    return response.text
+        if (user.last_name):
+            new_message.last_name = user.last_name
+        if (user.username):
+            new_message.username = user.username
+        # Instance new_message
+        db.session.add(new_message)
+        db.session.commit()
+        logger.success({"Request": {"status": "True", "data": ["message_user", {"user_id": f"{user.id_user}", "message": f"{new_message.text}"}]}})
+        return response.text
+    else:
+        logger.error({"Request": {"status": "null", "data": ["get_user", {"id_user": "None"}]}})
+        return abort(400, {
+            "Request": {
+                "status": "null",
+                "data": ["get_user", {
+                    "id_user": "None"
+                }]
+            }
+        })

@@ -12,6 +12,7 @@ requests = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 loguru = "*"
+pytest = "*"
 
 [dev-packages]
 
