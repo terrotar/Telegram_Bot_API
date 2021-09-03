@@ -60,16 +60,15 @@ JSON example:
 
 - DB
 Criar coluna data registro na tabela usuario
-Integrar coluna registro da tabela usuário com tabela mensagem
-
+OK
 
 - LOG
 Integrar .log por dia
-
+OK
 
 - TEST
 Implementar testes unitários
-
+PROGRESS
 
 - BOT
 Opção de descadastrar do sistema via chat
