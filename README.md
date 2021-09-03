@@ -61,7 +61,7 @@ com o 'flask run'.
 <code>flask run --no-reload</code>
 
 
-- Chame o bot @Terrotar_GitWebDevTestBot para iniciar a conversa.
+- Chame o bot @Terrotar_GitWebDevTestBot(WebDevTest) para iniciar a conversa.
 
 - Acesse as URL's da API para poder utilizar o sistema no navegador.
 URL's:
