@@ -26,14 +26,19 @@ class User(db.Model):
                              db.String,
                              unique=True,
                              nullable=False)
+    __join_date = db.Column("join_date",
+                       db.Date,
+                       unique=False,
+                       nullable=False)
     __messages = db.relationship("Message", backref="messages")
 
-    def __init__(self, id_user, username, first_name, last_name, cel_number):
+    def __init__(self, id_user, username, first_name, last_name, cel_number, join_date):
         self.__id_user = id_user
         self.__username = username
         self.__first_name = first_name
         self.__last_name = last_name
         self.__cel_number = cel_number
+        self.__join_date = join_date
 
     # GETTERS
     # id_user
@@ -71,7 +76,8 @@ class User(db.Model):
 # Marshmallow Schema
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ("id_user", "username", "first_name", "last_name", "cel_number")
+        fields = ("id_user", "username", "first_name",
+                  "last_name", "cel_number", "join_date")
 
 
 # Loads in JSON one or many users

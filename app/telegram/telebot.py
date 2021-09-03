@@ -8,6 +8,8 @@ from .dbhelper import DBHelper
 
 from loguru import logger
 
+from datetime import date
+
 
 # Instance of database's helper class
 db = DBHelper()
@@ -26,7 +28,8 @@ Para receber mensagens é necessário
 realizar o cadastro /register\n
 Caso esteja em duvida /help
              """)
-    logger.success({"Telebot": {"status": "True", "data": ["start_chat", {"user_id": f"{update.message.from_user.id}"}]}})
+    logger.success({"Telebot": {"status": "True", "data": [
+                   "start_chat", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Help
@@ -41,7 +44,8 @@ def help_user(update, context):
              Cadastro /register
              Ajuda /help
              """)
-    logger.info({"Telebot": {"status": "True", "data": ["command_help", {"user_id": f"{update.message.from_user.id}"}]}})
+    logger.info({"Telebot": {"status": "True", "data": [
+                "command_help", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Register
@@ -60,23 +64,22 @@ Para continuar o cadastro é necessário compartilhar seu celular.\n
 Caso tenha dúvidas, clique ou digite /help
                                   """,
                              reply_markup=reply_markup)
-    logger.info({"Telebot": {"status": "True", "data": ["command_register", {"user_id": f"{update.message.from_user.id}"}]}})
+    logger.info({"Telebot": {"status": "True", "data": [
+                "command_register", {"user_id": f"{update.message.from_user.id}"}]}})
 
 
 # Contact Callback
 def contact_callback(update, context):
+    register = date.today()
+    # datetime.date(byear, bmonth, bday)
     contact = update.effective_message.contact
     if (contact):
-        try:
             db.add_user(contact.user_id, update.message.from_user.username, contact.first_name,
-                        contact.last_name, contact.phone_number)
+                        contact.last_name, contact.phone_number, register)
             context.bot.send_message(chat_id=update.effective_chat.id,
                                      text="Parabéns!\nVocê acaba de se registrar no WebDevTestBot!")
-            logger.success({"Telebot": {"status": "True", "data": ["new_user", {"user_id": f"{contact.user_id}"}]}})
-        except Exception:
-            context.bot.send_message(chat_id=update.effective_chat.id,
-                                     text=f"Você já está cadastrado =]")
-            logger.error({"Telebot": {"status": "False", "data": ["already_registered", {"user_id": f"{contact.user_id}"}]}})
+            logger.success({"Telebot": {"status": "True", "data": [
+                           "new_user", {"user_id": f"{contact.user_id}"}]}})
 
 
 # MUST BE LAST
