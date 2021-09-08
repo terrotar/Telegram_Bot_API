@@ -67,12 +67,11 @@ com o 'flask run'.
 URL's:
 - localhost/api/all_users: Disponibiliza todos usuários cadastrados no banco de dados.
 - localhost/api/user/get/<id_user>: Substitua <id_user> pelo id do usuário que deseja coletar informações dentro do banco de dados.
-- /user/message/<user_id>/<message>: Substitua <user_id> pelo id do usuário e <message> pela mensagem que deseja enviar via POST para
-o usuário.
+- /user/message/<user_id>/<message>: Substitua <code><user_id></code> pelo id do usuário e <code><message></code> pela mensagem que deseja enviar via POST para o usuário.
 
 Obs1: Dentro dessa última route é realizado o envio do post através de um JSON com auxílio da biblioteca 'requests'. Para mais infos, veja app/blueprints/api/routes.py.
 
-Obs2: Caso ao rodar o comando flask retorne um erro do 'sqlite3 OperationalError: unable to open database file' verifique se a pasta app/database está criada e seu arquivo app/database/sqlite.db.
+Obs2: Caso ao rodar o comando flask retorne um erro do 'sqlite3 OperationalError: unable to open database file' verifique se a pasta app/database está criada e seu arquivo app/database/sqlite.db. Caso seja o caso, apenas crie a pasta '/database' dentro do pacote principal app.
 
 Obs3: Para rodar os testes, basta abrir um terminal e ir na pasta /tests e digitar o comando <code>pytest</code>. Certifique-se de que a aplicação está rodando, ou todos testes irão falhar ao tentar conectar com as URL's.
 
